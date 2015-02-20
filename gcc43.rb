@@ -32,7 +32,6 @@ class Gcc43 < Formula
   option 'enable-nls', 'Build with native language support (localization)'
   option 'enable-profiled-build', 'Make use of profile guided optimization when bootstrapping GCC'
 
-  depends_on MaximumMacOSRequirement => :mavericks
   depends_on 'gmp4'
   depends_on 'mpfr2'
   depends_on 'ecj' if build.include? 'enable-java' or build.include? 'enable-all-languages'
@@ -59,6 +58,12 @@ class Gcc43 < Formula
   patch :p0 do
     url "https://trac.macports.org/export/110576/trunk/dports/lang/gcc43/files/ppc_fde_encoding.diff"
     sha1 "49e335d085567467155ea6512ffa959a18eab0ef"
+  end
+
+  # Handle OS X deployment targets correctly (GCC PR target/63810 <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63810>).
+  patch :p0 do
+    url "https://trac.macports.org/export/129382/trunk/dports/lang/gcc43/files/macosx-version-min.patch"
+    sha1 "bcd53ddd458406cd531bacbc64e7acffa294f179"
   end
 
   fails_with :llvm
